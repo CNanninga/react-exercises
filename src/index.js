@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
-import Game from './01_tic-tac-toe/index.js'
+import Greetings from './02_greeting/index.js'
 
 // ========================================
 
 ReactDOM.render(
-    <Game />,
+    <Greetings />,
     document.getElementById('root')
 );
