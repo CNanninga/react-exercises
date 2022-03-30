@@ -1,9 +1,12 @@
 import ReactDOM from 'react-dom/client';
-import Greetings from './02_greeting/index.js'
+import Clock from './03_clock/index.js'
 
 // ========================================
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')
 );
-root.render(<Greetings number={1} />);
+function tick() {
+    root.render(<Clock/>);
+}
+setInterval(tick, 1000);
