@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
-import Clock from './04_stateful_clock/index.js'
+import ToggleApp from './05_toggle/index.js'
 
 // ========================================
 
 const root = ReactDOM.createRoot(
     document.getElementById('root')
 );
-root.render(<Clock />);
+root.render(<ToggleApp />);
