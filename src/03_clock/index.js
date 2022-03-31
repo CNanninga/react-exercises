@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Clock extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <div>
@@ -18,8 +18,8 @@ class Clock extends React.Component {
 //     document.getElementById('root')
 // );
 // function tick() {
-//     root.render(<Clock/>);
+//     root.render(<App/>);
 // }
 // setInterval(tick, 1000);
 
-export default Clock;
+export default App;

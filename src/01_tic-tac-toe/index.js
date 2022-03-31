@@ -134,12 +134,4 @@ function calculateWinner(squares) {
     return null;
 }
 
-// ========================================
-// Include in root index.js:
-
-// ReactDOM.render(
-//     <Game />,
-//     document.getElementById('root')
-// );
-
 export default Game;

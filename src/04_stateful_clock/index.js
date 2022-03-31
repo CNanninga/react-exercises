@@ -35,12 +35,4 @@ class Clock extends React.Component {
     }
 }
 
-// ========================================
-// Include in root index.js:
-
-// const root = ReactDOM.createRoot(
-//     document.getElementById('root')
-// );
-// root.render(<Clock />);
-
 export default Clock;

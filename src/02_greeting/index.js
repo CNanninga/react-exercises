@@ -28,12 +28,4 @@ class Greetings extends React.Component {
     }
 }
 
-// ========================================
-// Include in root index.js:
-
-// ReactDOM.render(
-//     <Greetings />,
-//     document.getElementById('root')
-// );
-
 export default Greetings;

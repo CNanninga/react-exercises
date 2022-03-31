@@ -77,12 +77,4 @@ class ToggleApp extends React.Component {
     }
 }
 
-// ========================================
-// Include in root index.js:
-
-// const root = ReactDOM.createRoot(
-//     document.getElementById('root')
-// );
-// root.render(<Toggle />);
-
 export default ToggleApp;
