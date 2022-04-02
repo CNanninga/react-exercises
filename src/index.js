@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './11_statelift_post/index.js'
+import App from './12_composition/index.js'
 
 // ========================================
 
