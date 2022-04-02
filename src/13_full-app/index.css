@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.filterable-products {
+    border: 1px solid #88ff88;
+    width: 350px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.search-bar {
+    border: 1px solid #8888ff;
+    padding: 10px;
+    margin: 10px;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.products-table th, .products-table td {
+    border: 1px solid #888888;
+    padding: 10px;
+    text-align: left;
+}
+
+.products-table th {
+    background-color: #ddd;
+}
+
+.products-table tr.category-row th {
+    background-color: #ffdddd;
+}
