@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import './index.css';
 
 class SearchBar extends React.Component {
@@ -53,14 +53,16 @@ class ProductTable extends React.Component {
                         <th>Price</th>
                     </tr>
                 </thead>
+                <tbody>
                 {categories.map((category) => (
-                    <tbody key={category.name}>
+                    <Fragment key={category.name}>
                         <ProductCategoryRow name={category.name} />
                         {category.products.map((product) => (
                             <ProductRow key={product.name} name={product.name} price={product.price} stocked={product.stocked} />
                         ))}
-                    </tbody>
+                    </Fragment>
                 ))}
+                </tbody>
             </table>
         );
     }
