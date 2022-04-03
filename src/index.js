@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './13_full-app/index.js'
+import App from './14_hooks-intro/index.js'
 
 // ========================================
 
