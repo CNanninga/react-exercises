@@ -7,12 +7,13 @@ function ListItem(props) {
 }
 
 function App (props) {
-    const {getUsers, sort} = useApp();
+    const {getUsers, sort, timesSorted} = useApp();
 
     return (
         <div>
             <h1>Lists</h1>
-            <p><button onClick={sort}>Sort</button></p>
+            <p><button onClick={sort}>Sort</button><br />
+            Times sorted: {timesSorted}</p>
             <ul>
                 {getUsers().map((user) => (
                     <ListItem key={user.id} id={user.id} username={user.username} />
@@ -42,6 +43,7 @@ function useApp () {
             username: 'Frank',
         }
     ]);
+    const [timesSorted, setTimesSorted] = React.useState(0);
 
     const getUsers = React.useCallback(function() {
         return users;
@@ -57,12 +59,14 @@ function useApp () {
             }
             return 0;
         });
+        let newTimesSorted = timesSorted + 1;
 
         setDirection(newDirection);
         setUsers(newUsers);
-    }, [direction, setDirection, users, setUsers]);
+        setTimesSorted(newTimesSorted);
+    }, [direction, setDirection, users, setUsers, timesSorted, setTimesSorted]);
 
-    return {getUsers, sort};
+    return {getUsers, sort, timesSorted};
 }
 
 export default App;
