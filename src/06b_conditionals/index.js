@@ -19,56 +19,43 @@ function Greeting(props) {
     return greeting;
 }
 
-class Messages extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            messages: [],
-        };
+function Messages(props) {
+    const [messages, setMessages] = React.useState([]);
+
+    function addMessage() {
+        let newMessages = messages.slice(0, messages.length);
+        newMessages.push('');
+        setMessages(newMessages);
     }
 
-    addMessage() {
-        let messages = this.state.messages;
-        messages.push('');
-        this.setState({
-            messages: messages
-        });
+    function clearMessages() {
+        setMessages([]);
     }
 
-    clearMessages() {
-        this.setState({
-            messages: []
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <button onClick={this.addMessage.bind(this)}>Add Message</button>
-                <button onClick={this.clearMessages.bind(this)}>Clear Messages</button>
-                {this.state.messages.length > 0 &&
-                    <p>You have {this.state.messages.length} unread messages.</p>
-                }
-            </div>
-        );
-    }
+    return (
+        <div>
+            <button onClick={addMessage}>Add Message</button>
+            <button onClick={clearMessages}>Clear Messages</button>
+            {messages.length > 0 &&
+                <p>You have {messages.length} unread messages.</p>
+            }
+        </div>
+    );
 }
 
-class App extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Various Conditionals</h1>
-                <h2>Conditional Render Return</h2>
-                <h3>User Greeting</h3>
-                <Greeting isLoggedIn={true} />
-                <h3>Guest Greeting</h3>
-                <Greeting isLoggedIn={false} />
-                <h2>&& Operator</h2>
-                <Messages />
-            </div>
-        );
-    }
+function App(props) {
+    return (
+        <div>
+            <h1>Various Conditionals</h1>
+            <h2>Conditional Render Return</h2>
+            <h3>User Greeting</h3>
+            <Greeting isLoggedIn={true} />
+            <h3>Guest Greeting</h3>
+            <Greeting isLoggedIn={false} />
+            <h2>&& Operator</h2>
+            <Messages />
+        </div>
+    );
 }
 
 export default App;
