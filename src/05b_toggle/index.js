@@ -1,28 +1,17 @@
 import React from 'react';
 
-class ToggleButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isToggleOn: true
-        };
+function ToggleButton(props) {
+    const [isToggleOn, setIsToggleOn] = React.useState(true);
 
-        this.handleClick = this.handleClick.bind(this);
+    function handleClick() {
+        setIsToggleOn(!isToggleOn);
     }
 
-    handleClick() {
-        this.setState((prevState) => ({
-            isToggleOn: !prevState.isToggleOn
-        }));
-    }
-
-    render() {
-        return (
-            <button onClick={this.handleClick}>
-                {this.state.isToggleOn ? 'ON' : 'OFF'}
-            </button>
-        );
-    }
+    return (
+        <button onClick={handleClick}>
+            {this.state.isToggleOn ? 'ON' : 'OFF'}
+        </button>
+    );
 }
 
 function EventLink(props) {
@@ -31,50 +20,39 @@ function EventLink(props) {
     );
 }
 
-class EventLinks extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            number: 1
-        };
-    }
+function EventLinks(props) {
+    const [number, setNumber] = React.useState(1);
 
-    renderLink(i) {
+    function renderLink(i) {
         return (
-            <EventLink value={i} onClick={this.handleClick.bind(this, i)} />
+            <EventLink value={i} onClick={(e) => handleClick(i, e)} />
         );
     }
 
-    handleClick(i, e) {
+    function handleClick(i, e) {
         e.preventDefault();
-        this.setState({
-            number: i,
-        });
+        setNumber(i);
     }
 
-    render() {
-        return (
-            <div>
-                <ul>
-                    <li>{this.renderLink(1)}</li>
-                    <li>{this.renderLink(2)}</li>
-                    <li>{this.renderLink(3)}</li>
-                </ul>
-                <h1>{this.state.number}</h1>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <ul>
+                <li>{renderLink(1)}</li>
+                <li>{renderLink(2)}</li>
+                <li>{renderLink(3)}</li>
+            </ul>
+            <h1>{number}</h1>
+        </div>
+    );
 }
 
-class ToggleApp extends React.Component {
-    render() {
-        return (
-            <div>
-                <p><ToggleButton /></p>
-                <EventLinks />
-            </div>
-        );
-    }
+function ToggleApp(props) {
+    return (
+        <div>
+            <p><ToggleButton /></p>
+            <EventLinks />
+        </div>
+    );
 }
 
 export default ToggleApp;
