@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './02b_greeting/index.js'
+import App from './04b_stateful_clock/index.js'
 
 // ========================================
 
