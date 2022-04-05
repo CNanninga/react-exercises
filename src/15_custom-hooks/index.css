@@ -1,0 +1,28 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.message-window {
+    border: 1px solid #aaa;
+    box-sizing: border-box;
+    width: 350px;
+}
+
+.message-window h2 {
+    background-color: #dfd;
+    margin: 0;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.message-window .chat {
+    padding: 10px;
+}
+
+.friends-list .online span {
+    color: #0b0;
+}
+
+.friends-list .offline span {
+    color: #999;
+}
