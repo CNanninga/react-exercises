@@ -5,24 +5,6 @@ const scaleNames = {
     f: 'Fahrenheit'
 };
 
-function toCelsius(fahrenheit) {
-    return (fahrenheit - 32) * 5 / 9;
-}
-
-function toFahrenheit(celsius) {
-    return (celsius * 9 / 5) + 32;
-}
-
-function tryConvert(temperature, convert) {
-    const input = parseFloat(temperature);
-    if (Number.isNaN(input)) {
-        return '';
-    }
-    const output = convert(input);
-    const rounded = Math.round(output * 1000) / 1000;
-    return rounded.toString();
-}
-
 function BoilingVerdict(props) {
     if (props.celsius >= 100) {
         return (
@@ -35,54 +17,61 @@ function BoilingVerdict(props) {
     }
 }
 
-class TemperatureInput extends React.Component {
-    handleChange(e) {
-        this.props.onTemperatureChange(e.target.value);
+function TemperatureInput(props) {
+    function handleChange(e) {
+        props.onTemperatureChange(e.target.value);
     }
 
-    render() {
-        const temperature = this.props.temperature;
-        const scale = this.props.scale;
-        return (
-            <fieldset>
-                <legend>Enter temperature in {scaleNames[scale]}:</legend>
-                <input value={temperature} onChange={this.handleChange.bind(this)} />
-            </fieldset>
-        );
-    }
+    return (
+        <fieldset>
+            <legend>Enter temperature in {scaleNames[props.scale]}:</legend>
+            <input value={props.temperature} onChange={handleChange} />
+        </fieldset>
+    );
 }
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            temperature: '',
-            scale: 'c'
-        };
+function App(props) {
+    const [temperature, setTemperature] = React.useState('');
+    const [scale, setScale] = React.useState('c');
+
+    const celsius = (scale === 'f') ? tryConvert(temperature, toCelsius) : temperature;
+    const fahrenheit = (scale === 'c') ? tryConvert(temperature, toFahrenheit) : temperature;
+
+    function toCelsius(fahrenheit) {
+        return (fahrenheit - 32) * 5 / 9;
     }
 
-    handleCelsiusChange(temperature) {
-        this.setState({scale: 'c', temperature});
+    function toFahrenheit(celsius) {
+        return (celsius * 9 / 5) + 32;
     }
 
-    handleFahrenheitChange(temperature) {
-        this.setState({scale: 'f', temperature});
+    function tryConvert(temperature, convert) {
+        const input = parseFloat(temperature);
+        if (Number.isNaN(input)) {
+            return '';
+        }
+        const output = convert(input);
+        const rounded = Math.round(output * 1000) / 1000;
+        return rounded.toString();
     }
 
-    render() {
-        const scale = this.state.scale;
-        const temperature = this.state.temperature;
-        const celsius = (scale === 'f') ? tryConvert(temperature, toCelsius) : temperature;
-        const fahrenheit = (scale === 'c') ? tryConvert(temperature, toFahrenheit) : temperature;
-
-        return (
-            <div>
-                <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={this.handleCelsiusChange.bind(this)} />
-                <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={this.handleFahrenheitChange.bind(this)} />
-                <BoilingVerdict celsius={parseFloat(celsius)} />
-            </div>
-        );
+    function handleCelsiusChange(newTemp) {
+        setScale('c');
+        setTemperature(newTemp);
     }
+
+    function handleFahrenheitChange(newTemp) {
+        setScale('f');
+        setTemperature(newTemp);
+    }
+
+    return (
+        <div>
+            <TemperatureInput scale="c" temperature={celsius} onTemperatureChange={handleCelsiusChange} />
+            <TemperatureInput scale="f" temperature={fahrenheit} onTemperatureChange={handleFahrenheitChange} />
+            <BoilingVerdict celsius={parseFloat(celsius)} />
+        </div>
+    );
 }
 
 export default App;
