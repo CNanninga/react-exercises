@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import App from './05b_toggle/index.js'
+import App from './06b_conditionals/index.js'
 
 // ========================================
 
