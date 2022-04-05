@@ -1,26 +1,26 @@
 import React, {Fragment} from 'react';
 import './index.css';
 
-class SearchBar extends React.Component {
-    render() {
-        return (
-            <div className="search-bar">
-                <input type="text" placeholder="Search..." value={this.props.filterText} onChange={this.props.onFilterTextChange} /><br />
-                <input type="checkbox" checked={this.props.inStockOnly} onChange={this.props.onInStockOnlyChange} /><label>Only show products in stock</label>
-            </div>
-        );
-    }
+function SearchBar(props) {
+    return (
+        <div className="search-bar">
+            <input type="text" placeholder="Search..." value={props.filterText} onChange={props.onFilterTextChange} /><br />
+            <input type="checkbox" checked={props.inStockOnly} onChange={props.onInStockOnlyChange} /><label>Only show products in stock</label>
+        </div>
+    );
 }
 
-class ProductTable extends React.Component {
-    formatProducts(products) {
+function ProductTable(props) {
+    const categories = formatProducts(props.products);
+
+    function formatProducts(products) {
         let results = {};
         products.map((product) => {
             const productNameLowercase = product.name.toLowerCase();
-            if (this.props.inStockOnly && !product.stocked) {
+            if (props.inStockOnly && !product.stocked) {
                 return false;
             }
-            if (this.props.filterText && (productNameLowercase.search(this.props.filterText) < 0)) {
+            if (props.filterText && (productNameLowercase.search(props.filterText) < 0)) {
                 return false;
             }
 
@@ -42,75 +42,60 @@ class ProductTable extends React.Component {
         return resultsArr;
     }
 
-    render() {
-        const categories = this.formatProducts(this.props.products);
-
-        return (
-            <table className="products-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {categories.map((category) => (
-                    <Fragment key={category.name}>
-                        <ProductCategoryRow name={category.name} />
-                        {category.products.map((product) => (
-                            <ProductRow key={product.name} name={product.name} price={product.price} stocked={product.stocked} />
-                        ))}
-                    </Fragment>
-                ))}
-                </tbody>
-            </table>
-        );
-    }
+    return (
+        <table className="products-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+            {categories.map((category) => (
+                <Fragment key={category.name}>
+                    <ProductCategoryRow name={category.name} />
+                    {category.products.map((product) => (
+                        <ProductRow key={product.name} name={product.name} price={product.price} stocked={product.stocked} />
+                    ))}
+                </Fragment>
+            ))}
+            </tbody>
+        </table>
+    );
 }
 
-class ProductCategoryRow extends React.Component {
-    render() {
-        return (
-            <tr className="category-row">
-                <th colSpan="2">{this.props.name}</th>
-            </tr>
-        );
-    }
+function ProductCategoryRow(props) {
+    return (
+        <tr className="category-row">
+            <th colSpan="2">{props.name}</th>
+        </tr>
+    );
 }
 
-class ProductRow extends React.Component {
-    render() {
-        return (
-            <tr className="product-row">
-                <td>{this.props.name}</td>
-                <td>{this.props.price}</td>
-            </tr>
-        );
-    }
+function ProductRow(props) {
+    return (
+        <tr className="product-row">
+            <td>{props.name}</td>
+            <td>{props.price}</td>
+        </tr>
+    );
 }
 
-class FilterableProductTable extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filterText: '',
-            inStockOnly: false,
-        }
+function FilterableProductTable(props) {
+    const [filterText, setFilterText] = React.useState('');
+    const [inStockOnly, setInStockOnly] = React.useState(false);
+
+    const products = getProducts();
+
+    function handleFilterText(e) {
+        setFilterText(e.target.value);
     }
 
-    handleFilterText(e) {
-        this.setState({
-            filterText: e.target.value,
-        });
+    function handleInStockOnly(e) {
+        setInStockOnly(e.target.checked);
     }
 
-    handleInStockOnly(e) {
-        this.setState({
-            inStockOnly: e.target.checked,
-        });
-    }
-
-    getProducts() {
+    function getProducts() {
         return [
             {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
             {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
@@ -121,20 +106,17 @@ class FilterableProductTable extends React.Component {
         ];
     }
 
-    render() {
-        const products = this.getProducts();
-        return (
-            <div className="filterable-products">
-                <SearchBar
-                    filterText={this.state.filterText}
-                    inStockOnly={this.state.inStockOnly}
-                    onFilterTextChange={this.handleFilterText.bind(this)}
-                    onInStockOnlyChange={this.handleInStockOnly.bind(this)}
-                />
-                <ProductTable products={products} filterText={this.state.filterText.toLowerCase()} inStockOnly={this.state.inStockOnly} />
-            </div>
-        );
-    }
+    return (
+        <div className="filterable-products">
+            <SearchBar
+                filterText={filterText}
+                inStockOnly={inStockOnly}
+                onFilterTextChange={handleFilterText}
+                onInStockOnlyChange={handleInStockOnly}
+            />
+            <ProductTable products={products} filterText={filterText.toLowerCase()} inStockOnly={inStockOnly} />
+        </div>
+    );
 }
 
 export default FilterableProductTable;
